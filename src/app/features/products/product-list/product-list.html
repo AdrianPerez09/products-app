@@ -1,14 +1,18 @@
 <h2>Products</h2>
 
-<ul>
-@for (product of products; track product.id) {
+<p>Total: {{ products.length }}</p>
 
-<div>
-  <h3>Name: {{ product.name }}</h3>
-  <p>Description: {{ product.description }}</p>
-  <p>Price: {{ product.price | currency }}</p>
-  <p>Category: {{ product.category.name }}</p>
-  <p>Brand: {{ product.brand.name }}</p>
-</div>
-}
+<ul>
+  @for (product of products; track product.id) {
+    <li>
+        <div>
+        <h3>Name: {{ product.name }}</h3>
+        <p>Description: {{ product.description }}</p>
+        <p>Price: {{ product.price | currency }}</p>
+        <p>Category: {{ product.category.name }}</p>
+        <p>Brand: {{ product.brand.name }}</p>
+    </div>
+    </li>
+    
+  }
 </ul>

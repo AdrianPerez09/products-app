@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product/product.service';
 import { OnInit } from '@angular/core';
@@ -13,25 +13,26 @@ import { ChangeDetectorRef } from '@angular/core';
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
 
-  constructor(private productService: ProductService, private cdr: ChangeDetectorRef) {
-
+constructor(private productService: ProductService,     private ngZone: NgZone) {
 } 
 
 ngOnInit(): void {
     // Lista los productos al cargar el componente
     console.log('ProductListComponent initialized');
       this.loadProducts();
-    
-
   }
-  loadProducts(): void {
+
+loadProducts(): void {
     console.log('Loading products...');
 
     this.productService.getAllProducts().subscribe({
       next: (data) => {
         console.log('Products loaded:', data);
-        this.products = data;
-        this.cdr.detectChanges(); // Asegura que Angular detecte los cambios en la vista
+        this.ngZone.run(() => {
+
+          this.products = data;
+
+        });
       },
       error: (error) => {
         console.error('Error loading products:', error);
