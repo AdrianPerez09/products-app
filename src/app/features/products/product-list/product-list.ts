@@ -1,44 +1,36 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product/product.service';
 import { OnInit } from '@angular/core';
-import { ChangeDetectorRef } from '@angular/core';
+import { signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-product-list',
-  standalone: false,
+   standalone: true,
+  imports: [CommonModule],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
 export class ProductListComponent implements OnInit {
-  products: Product[] = [];
+  products = signal<Product[]>([]);
 
-constructor(private productService: ProductService,     private ngZone: NgZone) {
-} 
 
-ngOnInit(): void {
+  constructor(
+    private productService: ProductService,
+  ) { }
+  ngOnInit(): void {
     // Lista los productos al cargar el componente
     console.log('ProductListComponent initialized');
-      this.loadProducts();
+    this.loadProducts();
   }
 
-loadProducts(): void {
+  loadProducts(): void {
     console.log('Loading products...');
+    this.productService.getAllProducts().subscribe(data => {
+      this.products.set(data);
+    });
 
-    this.productService.getAllProducts().subscribe({
-      next: (data) => {
-        console.log('Products loaded:', data);
-        this.ngZone.run(() => {
-
-          this.products = data;
-
-        });
-      },
-      error: (error) => {
-        console.error('Error loading products:', error);
-      }
-    }
-    );
   }
-
 }

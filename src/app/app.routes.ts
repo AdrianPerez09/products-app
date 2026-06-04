@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+
 import { RouterModule, Routes } from '@angular/router';
 import { ProductListComponent } from './features/products/product-list/product-list';
 import { LoginComponent } from './features/auth/login/login';
@@ -6,7 +6,7 @@ import { BrandListComponent } from './features/brands/brand-list/brand-list';
 import { CategoryListComponent } from './features/categories/category-list/category-list';
 import { DashboardComponent } from './features/dashboard/dashboard';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
   path: '',
   redirectTo: '/login',
@@ -35,8 +35,4 @@ const routes: Routes = [
   }
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
 export class AppRoutingModule { }

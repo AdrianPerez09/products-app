@@ -1,9 +1,9 @@
 <h2>Products</h2>
 
-<p>Total: {{ products.length }}</p>
+<p>Total: {{ products().length }}</p>
 
 <ul>
-  @for (product of products; track product.id) {
+  @for (product of products(); track product.id) {
     <li>
         <div>
         <h3>Name: {{ product.name }}</h3>
@@ -11,7 +11,7 @@
         <p>Price: {{ product.price | currency }}</p>
         <p>Category: {{ product.category.name }}</p>
         <p>Brand: {{ product.brand.name }}</p>
-    </div>
+      </div>
     </li>
     
   }

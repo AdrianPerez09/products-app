@@ -3,10 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from '../../../models/category.model';
 
 import { CategoryService } from '../../../services/category/CategoryService';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-category-list',
-  standalone: false,
+  standalone: true,
   templateUrl: './category-list.html',
   styleUrl: './category-list.css'
 })
