@@ -1,51 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
-import { Category } from '../../../models/category.model';
 
 import { CategoryService } from '../../../services/category/CategoryService';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 
 @Component({
   selector: 'app-category-list',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './category-list.html',
   styleUrl: './category-list.css'
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent{
+  private categoryService = inject(CategoryService);
 
-  categories: Category[] = [];
-
-  constructor(
-    private categoryService: CategoryService
-  ) {}
-
-  ngOnInit(): void {
-
-    this.loadCategories();
-
-  }
-
-  loadCategories(): void {
-
-    this.categoryService
-      .getAllCategories()
-      .subscribe({
-
-        next: (data) => {
-
-          this.categories = data;
-
-        },
-
-        error: (error) => {
-
-          console.error(error);
-
-        }
-
-      });
-
-  }
+  categories = toSignal(this.categoryService.getAllCategories(), { initialValue: [] });
 
 }

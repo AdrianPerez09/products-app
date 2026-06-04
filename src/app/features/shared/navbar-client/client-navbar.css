@@ -1,0 +1,159 @@
+.navbar {
+
+    background-color: white;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+}
+
+.navbar-container {
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 1rem 2rem;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 2rem;
+
+}
+
+/* LOGO */
+
+.logo {
+
+    flex-shrink: 0;
+
+}
+
+.logo a {
+
+    text-decoration: none;
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+/* MENÚS */
+
+.menu {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 1.75rem;
+
+}
+
+.menu a {
+
+    text-decoration: none;
+
+    color: #374151;
+
+    font-weight: 500;
+
+    transition: 0.2s ease;
+
+}
+
+.menu a:hover {
+
+    color: #2563eb;
+
+}
+
+/* BUSCADOR */
+
+.search-container {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+.search-container input {
+
+    width: 100%;
+
+    max-width: 550px;
+
+    padding: 0.9rem 1.25rem;
+
+    border-radius: 999px;
+
+    border: 1px solid #d1d5db;
+
+    background-color: #f3f4f6;
+
+    outline: none;
+
+    font-size: 0.95rem;
+
+}
+
+.search-container input:focus {
+
+    border-color: #2563eb;
+
+    background-color: white;
+
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 992px) {
+
+    .navbar-container {
+
+        flex-wrap: wrap;
+
+    }
+
+    .search-container {
+
+        order: 3;
+
+        width: 100%;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .navbar-container {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .menu {
+
+        justify-content: center;
+
+    }
+
+}

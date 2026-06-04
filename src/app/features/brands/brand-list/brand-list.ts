@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
-import { Brand } from '../../../models/brand.model';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { BrandService } from '../../../services/brand/BrandService';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-brand-list',
@@ -12,40 +11,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './brand-list.html',
   styleUrl: './brand-list.css'
 })
-export class BrandListComponent implements OnInit {
+export class BrandListComponent{
 
-  brands: Brand[] = [];
+  private brandService = inject(BrandService);
 
-  constructor(
-    private brandService: BrandService
-  ) {}
-
-  ngOnInit(): void {
-
-    this.loadBrands();
-
-  }
-
-  loadBrands(): void {
-
-    this.brandService
-      .getAllBrands()
-      .subscribe({
-
-        next: (data) => {
-
-          this.brands = data;
-
-        },
-
-        error: (error) => {
-
-          console.error(error);
-
-        }
-
-      });
-
-  }
+  brands = toSignal(this.brandService.getAllBrands(), { initialValue: [] });
 
 }

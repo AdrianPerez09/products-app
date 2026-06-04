@@ -5,12 +5,12 @@ import { LoginComponent } from './features/auth/login/login';
 import { BrandListComponent } from './features/brands/brand-list/brand-list';
 import { CategoryListComponent } from './features/categories/category-list/category-list';
 import { DashboardComponent } from './features/dashboard/dashboard';
+import { HomeComponent } from './features/home/home';
 
 export const routes: Routes = [
-  {
-  path: '',
-  redirectTo: '/login',
-  pathMatch: 'full'
+ {
+    path: '',
+    component: HomeComponent
   },
   {
     path: 'products',
@@ -35,4 +35,4 @@ export const routes: Routes = [
   }
 ];
 
-export class AppRoutingModule { }
+export class AppRoutes { }
