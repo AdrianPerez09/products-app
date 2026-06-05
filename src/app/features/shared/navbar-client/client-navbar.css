@@ -76,6 +76,8 @@
 
 }
 
+
+
 /* BUSCADOR */
 
 .search-container {
@@ -116,6 +118,153 @@
 
 }
 
+/* SIDEBAR */
+
+.overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.45);
+
+    backdrop-filter: blur(2px);
+
+    z-index: 1000;
+
+    animation: fadeIn .25s ease;
+
+}
+
+.sidebar-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 2rem;
+
+}
+
+
+.sidebar {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 320px;
+
+    height: 100vh;
+
+    background: white;
+
+    z-index: 1001;
+
+    padding: 2rem;
+
+    box-shadow: 4px 0 25px rgba(0,0,0,.15);
+
+    animation: slideIn .25s ease;
+
+}
+
+.sidebar a {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: .9rem 1rem;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    color: #111827;
+
+    transition: .2s;
+
+}
+
+.sidebar a:hover {
+
+    background: #f3f4f6;
+
+    color: #2563eb;
+
+    transform: translateX(5px);
+
+}
+
+/* BOTONES */
+
+.categories-button {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: .75rem;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    font-size: 1rem;
+
+    color: #111827;
+
+    transition: .2s;
+
+}
+
+.categories-button:hover {
+
+    color: rgb(248, 72, 0);
+
+}
+
+.hamburger {
+
+    font-size: 1.5rem;
+
+    transition: .2s;
+
+}
+
+.categories-button:hover .hamburger {
+
+    transform: scale(1.1);
+
+}
+
+.close-btn {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.close-btn:hover {
+
+    transform: rotate(90deg);
+
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 992px) {
@@ -149,6 +298,38 @@
     .menu {
 
         justify-content: center;
+
+    }
+
+}
+
+@keyframes slideIn {
+
+    from {
+
+        transform: translateX(-100%);
+
+    }
+
+    to {
+
+        transform: translateX(0);
+
+    }
+
+}
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
 
     }
 

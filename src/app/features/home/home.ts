@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavbarClientComponent } from '../shared/navbar-client/client-navbar';
+import { ClientNavbarComponent} from '../shared/navbar-client/client-navbar';
 
 @Component({
   selector: 'app-home',
-  imports: [NavbarClientComponent],
+  standalone: true,
+  imports: [ClientNavbarComponent],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrl: './home.css'
 })
 export class HomeComponent {}

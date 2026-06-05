@@ -20,4 +20,9 @@ export class ProductService {
   getAllProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(this.apiUrl);
   }
+
+  getProductsByCategory(categoryId: number) {
+
+    return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
+  }
 }

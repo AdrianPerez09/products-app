@@ -17,6 +17,10 @@ export const routes: Routes = [
     component: ProductListComponent
   },
   {
+    path: 'products/category/:id',
+    component: ProductListComponent
+  },
+  {
     path: 'login',
     component: LoginComponent
   },

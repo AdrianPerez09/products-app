@@ -1,0 +1,199 @@
+/* ==========================================
+   PRODUCT LIST PAGE
+========================================== */
+
+.products-page {
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+    padding: 2rem;
+
+}
+
+
+/* ==========================================
+   PAGE HEADER
+========================================== */
+
+.products-toolbar {
+
+    margin-bottom: 2rem;
+
+}
+
+.products-toolbar h1 {
+
+    margin-bottom: .5rem;
+
+}
+
+.products-toolbar p {
+
+    color: #6b7280;
+
+}
+
+
+/* ==========================================
+   PRODUCTS GRID
+========================================== */
+
+.products-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 2rem;
+
+}
+
+
+/* ==========================================
+   PRODUCT CARD
+========================================== */
+
+.product-card {
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    transition: .2s;
+
+    cursor: pointer;
+
+}
+
+.product-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+
+}
+
+
+/* ==========================================
+   PRODUCT IMAGE
+========================================== */
+
+.product-image {
+
+    height: 220px;
+
+    background: #f8fafc;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 4rem;
+
+}
+
+
+/* ==========================================
+   PRODUCT INFO
+========================================== */
+
+.product-info {
+
+    padding: 1rem;
+
+}
+
+.product-info h3 {
+
+    margin: .5rem 0;
+
+}
+
+.product-info p {
+
+    color: #6b7280;
+
+    margin-bottom: 1rem;
+
+}
+
+
+/* ==========================================
+   BRAND LABEL
+========================================== */
+
+.brand {
+
+    color: #6b7280;
+
+    font-size: .9rem;
+
+    font-weight: 500;
+
+}
+
+
+/* ==========================================
+   PRICE
+========================================== */
+
+.price {
+
+    margin-top: 1rem;
+
+    font-size: 1.4rem;
+
+    font-weight: 700;
+
+    color: rgb(248, 72, 0);
+
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1200px) {
+
+    .products-grid {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+}
+
+@media (max-width: 900px) {
+
+    .products-grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .products-page {
+
+        padding: 1rem;
+
+    }
+
+    .products-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}

@@ -1,11 +1,29 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+
+import { toSignal } from '@angular/core/rxjs-interop';
+
+import { CategoryService } from '../../../services/category/CategoryService';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-client-navbar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './client-navbar.html',
-  styleUrl: './client-navbar.css',
+  styleUrl: './client-navbar.css'
 })
-export class NavbarClientComponent {}
+export class ClientNavbarComponent {
+
+  private categoryService = inject(CategoryService);
+
+  sidebarOpen = signal(false);
+
+  categories = toSignal(
+    this.categoryService.getAllCategories(),
+    {
+      initialValue: []
+    }
+  );
+}

@@ -1,18 +1,69 @@
-<h2>Products</h2>
+<app-client-navbar ></app-client-navbar>
 
-<p>Total: {{ products().length }}</p>
+<div class="products-page">
 
-<ul>
-  @for (product of products(); track product.id) {
-    <li>
+    <div class="products-toolbar">
+
         <div>
-        <h3>Name: {{ product.name }}</h3>
-        <p>Description: {{ product.description }}</p>
-        <p>Price: {{ product.price | currency }}</p>
-        <p>Category: {{ product.category.name }}</p>
-        <p>Brand: {{ product.brand.name }}</p>
-      </div>
-    </li>
-    
-  }
-</ul>
+
+            <h1>Products</h1>
+
+            <p>
+
+                {{ products().length }}
+
+                products found
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="products-grid">
+
+        @for(product of products(); track product.id) {
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    📦
+
+                </div>
+
+                <div class="product-info">
+
+                    <span class="brand">
+
+                        {{ product.brand.name }}
+
+                    </span>
+
+                    <h3>
+
+                        {{ product.name }}
+
+                    </h3>
+
+                    <p>
+
+                        {{ product.description }}
+
+                    </p>
+
+                    <div class="price">
+
+                        {{ product.price | currency:'EUR' }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>
