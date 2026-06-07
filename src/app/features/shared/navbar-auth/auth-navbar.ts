@@ -8,22 +8,11 @@ import { CategoryService } from '../../../services/category/category.service';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-client-navbar',
+  selector: 'app-auth-navbar',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './client-navbar.html',
-  styleUrl: './client-navbar.css'
+  templateUrl: './auth-navbar.html',
+  styleUrl: './auth-navbar.css'
 })
-export class ClientNavbarComponent {
-
-  private categoryService = inject(CategoryService);
-
-  sidebarOpen = signal(false);
-
-  categories = toSignal(
-    this.categoryService.getAllCategories(),
-    {
-      initialValue: []
-    }
-  );
+export class AuthNavbarComponent {
 }

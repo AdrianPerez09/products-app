@@ -1,31 +1,134 @@
-<h2>Login</h2>
+<app-auth-navbar></app-auth-navbar>
 
-<div>
 
-    <label>Username</label>
+<div class="login-page">
 
-    <input
-        type="text"
-        [(ngModel)]="username">
+    <div class="login-container">
+
+        <!-- LEFT PANEL -->
+
+        <div class="login-banner">
+
+            <img src="/logos/CFG-logo.png" alt="CoreForge Components">
+
+            <h1>CoreForge Components</h1>
+
+            <p>
+
+                Premium hardware for enthusiasts,
+                gamers and professionals.
+
+            </p>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="login-card">
+
+            <h2>Welcome Back</h2>
+
+            <p class="subtitle">
+
+                Sign in to continue
+
+            </p>
+
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label>Username</label>
+
+                    <input type="text" formControlName="username" placeholder="Enter your username">
+
+                    @if (
+                    loginForm.controls.username.invalid &&
+                    loginForm.controls.username.touched
+                    ) {
+
+                    <small class="error-message">
+
+                        Username is required
+
+                    </small>
+
+                    }
+
+                </div>
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input type="password" formControlName="password" placeholder="Enter your password">
+
+                    @if (
+                    loginForm.controls.password.invalid &&
+                    loginForm.controls.password.touched
+                    ) {
+
+                    <small class="error-message">
+
+                        Password must contain at least 6 characters
+
+                    </small>
+
+                    }
+
+                </div>
+
+                <!-- SUBMIT -->
+
+                <button type="submit" class="login-btn" [disabled]="isLoading()">
+
+                    @if (isLoading()) {
+
+                    Signing In...
+
+                    } @else {
+
+                    Sign In
+
+                    }
+
+                </button>
+
+
+                @if (errorMessage()) {
+
+                <div class="login-error">
+
+                    {{ errorMessage() }}
+
+                </div>
+
+                }
+
+            </form>
+
+            <div class="register-link">
+
+                <span>
+
+                    Don't have an account?
+
+                </span>
+
+                <a routerLink="/register">
+
+                    Create account
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
-
-<br>
-
-<div>
-
-    <label>Password</label>
-
-    <input
-        type="password"
-        [(ngModel)]="password">
-
-</div>
-
-<br>
-
-<button (click)="login()">
-
-    Login
-
-</button>

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 
-import { BrandService } from '../../../services/brand/BrandService';
+import { BrandService } from '../../../services/brand/brand.service';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 

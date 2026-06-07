@@ -1,31 +1,122 @@
-import { Component } from '@angular/core';
-import {AuthService} from '../../../services/auth/authService';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
+import { Router, RouterLink } from '@angular/router';
+
+import { AuthService } from '../../../services/auth/auth.service';
+import { ClientNavbarComponent } from "../../shared/navbar-client/client-navbar";
+import { AuthNavbarComponent } from "../../shared/navbar-auth/auth-navbar";
+
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-login',
-   standalone: true,
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    AuthNavbarComponent
+  ],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrl: './login.css'
 })
 export class LoginComponent {
 
-username: string = '';
-password: string = '';
+  isLoading = signal(false);
 
-constructor(private authService: AuthService) {}
+  errorMessage = signal('');
 
-login(): void {
-    this.authService.login({ username: this.username, password: this.password }).subscribe({
-      next: (response) => {
-        console.log('Login successful:', response);
-        this.authService.saveToken(response.token);
-      },
-      error: (error) => {
-        console.error('Login failed:', error);
-      }
-    });
+  private router = inject(Router)
+
+  private fb = inject(FormBuilder);
+
+  private authService = inject(AuthService);
+
+  // Formulario reactivo
+  loginForm = this.fb.nonNullable.group({
+
+    username: ['',
+      [
+        Validators.required
+      ]
+    ],
+
+    password: [
+      '',
+
+      [
+        Validators.required,
+        Validators.minLength(3)
+      ]
+    ]
+
+  });
+
+  login(): void {
+
+    if (this.loginForm.invalid) {
+
+      this.loginForm.markAllAsTouched();
+
+      return;
+
+    }
+
+    this.authService
+      .login(this.loginForm.getRawValue())
+
+      .subscribe({
+
+        next: response => {
+
+          this.authService.saveTokens(
+            response.accessToken,
+            response.refreshToken
+          );
+
+          this.authService.setRole(response.role);
+
+          this.router.navigate([
+            '/'
+          ]);
+
+        },
+
+        error: error => {
+
+          this.isLoading.set(false);
+
+          console.log('STATUS:', error.status);
+
+          console.log('ERROR:', error);
+
+          console.log('BODY:', error.error);
+
+
+
+          if (error.status === 401) {
+
+            this.errorMessage.set(
+              'Invalid username or password'
+            );
+
+            return;
+          }
+
+          this.errorMessage.set(
+            'Unexpected error'
+          );
+
+        }
+        
+
+      });
+
   }
+
 }

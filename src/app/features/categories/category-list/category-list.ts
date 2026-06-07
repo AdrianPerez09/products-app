@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 
 
-import { CategoryService } from '../../../services/category/CategoryService';
+import { CategoryService } from '../../../services/category/category.service';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 
