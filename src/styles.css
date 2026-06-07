@@ -1,1 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
+
+body::before {
+
+    content: '';
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 450px;
+
+    height: 100vh;
+
+    background-image:
+        radial-gradient(
+            #d1d5db 2px,
+            transparent 2px
+        );
+
+    background-size: 18px 18px;
+
+    opacity: .7;
+
+    mask-image:
+        linear-gradient(
+            to right,
+            black,
+            transparent
+        );
+
+    pointer-events: none;
+
+    z-index: -1;
+
+}
+
+body::after {
+
+    content: '';
+
+    position: fixed;
+
+    right: 0;
+
+    top: 0;
+
+    width: 450px;
+
+    height: 100vh;
+
+    background-image:
+        radial-gradient(
+            #d1d5db 2px,
+            transparent 2px
+        );
+
+    background-size: 18px 18px;
+
+    opacity: .7;
+
+    mask-image:
+        linear-gradient(
+            to left,
+            black,
+            transparent
+        );
+
+    pointer-events: none;
+
+    z-index: -1;
+
+}

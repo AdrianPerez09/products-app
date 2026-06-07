@@ -1,0 +1,189 @@
+<app-auth-navbar></app-auth-navbar>
+
+<div class="register-page">
+
+    <div class="register-container">
+
+        <!-- LEFT PANEL -->
+
+        <div class="register-banner">
+
+            <img
+                src="/logos/CFG-logo.png"
+                alt="CoreForge Components">
+
+            <h1>
+
+                CoreForge Components
+
+            </h1>
+
+            <p>
+
+                Create your account and access
+                premium hardware, exclusive offers
+                and future order tracking.
+
+            </p>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="register-card">
+
+            <h2>Create Account</h2>
+
+            <p class="subtitle">
+
+                Join CoreForge today
+
+            </p>
+
+            <form
+                [formGroup]="registerForm"
+                (ngSubmit)="register()">
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label>Username</label>
+
+                    <input
+                        type="text"
+                        formControlName="username"
+                        placeholder="Choose a username">
+
+                    @if (
+                        registerForm.controls.username.invalid &&
+                        registerForm.controls.username.touched
+                    ) {
+
+                        <small class="error-message">
+
+                            Username must contain at least 3 characters
+
+                        </small>
+
+                    }
+
+                </div>
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        formControlName="email"
+                        placeholder="Enter your email">
+
+                    @if (
+                        registerForm.controls.email.invalid &&
+                        registerForm.controls.email.touched
+                    ) {
+
+                        <small class="error-message">
+
+                            Enter a valid email
+
+                        </small>
+
+                    }
+
+                </div>
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        formControlName="password"
+                        placeholder="Choose a password">
+
+                    @if (
+                        registerForm.controls.password.invalid &&
+                        registerForm.controls.password.touched
+                    ) {
+
+                        <small class="error-message">
+
+                            Password must contain at least 6 characters
+
+                        </small>
+
+                    }
+
+                </div>
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>Confirm Password</label>
+
+                    <input
+                        type="password"
+                        formControlName="confirmPassword"
+                        placeholder="Repeat your password">
+
+                </div>
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                    [disabled]="isLoading()">
+
+                    @if (isLoading()) {
+
+                        Creating account...
+
+                    } @else {
+
+                        Create Account
+
+                    }
+
+                </button>
+
+                @if (errorMessage()) {
+
+                    <div class="register-error">
+
+                        {{ errorMessage() }}
+
+                    </div>
+
+                }
+
+            </form>
+
+            <div class="login-link">
+
+                <span>
+
+                    Already have an account?
+
+                </span>
+
+                <a routerLink="/login">
+
+                    Sign In
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

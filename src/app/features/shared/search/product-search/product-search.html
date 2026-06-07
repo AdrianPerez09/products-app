@@ -1,0 +1,54 @@
+<div class="search-wrapper">
+
+    <span class="search-icon">
+
+        🔍
+
+    </span>
+
+    <input
+        class="search-input"
+        type="text"
+        placeholder="Search processors, GPUs, laptops..."
+        [formControl]="searchControl">
+
+    @if (suggestions().length > 0 && isOpen()) {
+
+        <div class="search-results">
+
+            @for (product of suggestions(); track product.id) {
+
+                <a
+                    class="search-result">
+
+                    <div class="product-info">
+
+                        <span class="product-name">
+
+                            {{ product.name }}
+
+                        </span>
+
+                        <span class="product-category">
+
+                            {{ product.category?.name }}
+
+                        </span>
+
+                    </div>
+
+                    <span class="product-price">
+
+                        {{ product.price }} €
+
+                    </span>
+
+                </a>
+
+            }
+
+        </div>
+
+    }
+
+</div>

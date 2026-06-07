@@ -5,4 +5,6 @@ export interface AuthResponse {
     refreshToken: string;
 
     role: string;
+
+    username: string;
 }

@@ -1,42 +1,90 @@
+import { Routes } from '@angular/router';
 
-import { RouterModule, Routes } from '@angular/router';
-import { ProductListComponent } from './features/products/product-list/product-list';
-import { LoginComponent } from './features/auth/login/login';
-import { BrandListComponent } from './features/brands/brand-list/brand-list';
-import { CategoryListComponent } from './features/categories/category-list/category-list';
-import { DashboardComponent } from './features/dashboard/dashboard';
 import { HomeComponent } from './features/home/home';
 
+import { ProductListComponent } from './features/products/product-list/product-list';
+
+import { BrandListComponent } from './features/brands/brand-list/brand-list';
+
+import { CategoryListComponent } from './features/categories/category-list/category-list';
+
+import { DashboardComponent } from './features/dashboard/dashboard';
+
+import { LoginComponent } from './features/auth/login/login';
+
+import { RegisterComponent } from './features/auth/register/register';
+
+import { StoreLayoutComponent } from './features/shared/layouts/store-layout/store-layout';
+
 export const routes: Routes = [
- {
+
+  /* =========================
+     STORE
+  ========================= */
+
+  {
     path: '',
-    component: HomeComponent
+    component: StoreLayoutComponent,
+    children: [
+
+      {
+        path: '',
+        component: HomeComponent
+      },
+
+      {
+        path: 'products',
+        component: ProductListComponent
+      },
+
+      {
+        path: 'products/category/:id',
+        component: ProductListComponent
+      },
+
+      {
+        path: 'brands',
+        component: BrandListComponent
+      },
+
+      {
+        path: 'categories',
+        component: CategoryListComponent
+      }
+
+    ]
   },
-  {
-    path: 'products',
-    component: ProductListComponent
-  },
-  {
-    path: 'products/category/:id',
-    component: ProductListComponent
-  },
+
+  /* =========================
+     AUTH
+  ========================= */
+
   {
     path: 'login',
     component: LoginComponent
   },
+
   {
-    path: 'brands',
-    component: BrandListComponent
-    
+    path: 'register',
+    component: RegisterComponent
   },
-  {
-    path: 'categories',
-    component: CategoryListComponent
-  },
+
+  /* =========================
+     ADMIN
+  ========================= */
+
   {
     path: 'dashboard',
     component: DashboardComponent
-  }
-];
+  },
 
-export class AppRoutes { }
+  /* =========================
+     FALLBACK
+  ========================= */
+
+  {
+    path: '**',
+    redirectTo: ''
+  }
+
+];

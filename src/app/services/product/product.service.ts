@@ -25,4 +25,20 @@ export class ProductService {
 
     return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
   }
+
+  searchProducts(query: string) {
+
+  return this.http.get<Product[]>(
+
+    `${environment.apiUrl}/products/search`,
+
+    {
+      params: {
+        q: query
+      }
+    }
+
+  );
+
+}
 }

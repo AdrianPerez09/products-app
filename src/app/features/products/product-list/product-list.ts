@@ -16,7 +16,6 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs';
 
 import { ProductService } from '../../../services/product/product.service';
-import { ClientNavbarComponent } from "../../shared/navbar-client/client-navbar";
 
 @Component({
 
@@ -24,7 +23,7 @@ import { ClientNavbarComponent } from "../../shared/navbar-client/client-navbar"
 
   standalone: true,
 
-  imports: [CommonModule, ClientNavbarComponent],
+  imports: [CommonModule],
 
   templateUrl: './product-list.html',
 

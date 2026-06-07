@@ -9,7 +9,6 @@ import {
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../../../services/auth/auth.service';
-import { ClientNavbarComponent } from "../../shared/navbar-client/client-navbar";
 import { AuthNavbarComponent } from "../../shared/navbar-auth/auth-navbar";
 
 import { signal } from '@angular/core';
@@ -80,6 +79,7 @@ export class LoginComponent {
           );
 
           this.authService.setRole(response.role);
+          this.authService.saveUsername(response.username);
 
           this.router.navigate([
             '/'

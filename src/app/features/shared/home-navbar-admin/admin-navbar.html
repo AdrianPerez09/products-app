@@ -1,0 +1,95 @@
+<nav class="navbar">
+
+    <div class="navbar-container">
+
+        <div class="logo">
+            <a routerLink="/">
+                <img src="/logos/CFG-logo.png" alt="CoreForge Components">
+            </a>
+        </div>
+
+        <div class="categories-button" (click)="sidebarOpen.set(true)">
+
+            <span class="hamburger">☰</span>
+
+            <span>All Categories</span>
+
+        </div>
+
+        @if (sidebarOpen()) {
+
+            <div class="overlay" (click)="sidebarOpen.set(false)">
+            </div>
+
+            <aside class="sidebar">
+
+                <div class="sidebar-header">
+
+                    <h2>Categories</h2>
+
+                    <button
+                        class="close-btn"
+                        (click)="sidebarOpen.set(false)">
+                        ✕
+                    </button>
+
+                </div>
+
+                @for (category of categories(); track category.id) {
+
+                    <a
+                        [routerLink]="['/products/category', category.id]"
+                        (click)="sidebarOpen.set(false)">
+
+                        {{ category.name }}
+
+                    </a>
+
+                }
+
+            </aside>
+
+        }
+
+    <div class="search-container">
+
+            <app-product-search></app-product-search>
+
+        </div>
+
+        <div class="menu">
+
+            <a routerLink="/admin">
+                ⚙ Administration
+            </a>
+
+            <div class="user-dropdown">
+
+                <button class="user-btn">
+
+            
+                    👤 {{authService.usernameValue()}}
+
+                    <span>▼</span>
+
+                </button>
+
+                <div class="dropdown-menu">
+
+                    <a routerLink="/profile">
+                        Profile
+                    </a>
+
+                    <button (click)="logout()">
+                        Logout
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>

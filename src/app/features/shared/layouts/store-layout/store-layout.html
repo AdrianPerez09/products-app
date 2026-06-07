@@ -1,0 +1,19 @@
+@if (authService.isAdmin()) {
+
+    <app-home-navbar-admin></app-home-navbar-admin>
+
+} @else if (authService.isUser()) {
+
+    <app-client-navbar></app-client-navbar>
+
+} @else {
+
+    <app-guest-navbar></app-guest-navbar>
+
+}
+
+<main class="store-content">
+    <router-outlet />
+</main>
+
+<app-shop-footer></app-shop-footer>

@@ -1,0 +1,329 @@
+/* ==========================================
+   SEARCH WRAPPER
+========================================== */
+
+.search-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+/* ==========================================
+   SEARCH ICON
+========================================== */
+
+.search-icon {
+
+    position: absolute;
+
+    left: 24px;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #9ca3af;
+
+    font-size: 1rem;
+
+    pointer-events: none;
+
+    z-index: 10;
+
+}
+
+/* ==========================================
+   SEARCH INPUT
+========================================== */
+
+.search-input {
+
+    width: 100%;
+
+    min-width: 700px;
+
+    height: 64px;
+
+    padding: 0 1.5rem 0 3.75rem;
+
+    border-radius: 999px;
+
+    border: 2px solid transparent;
+
+    background: #f8fafc;
+
+    color: #111827;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+
+    outline: none;
+
+    transition: all .25s ease;
+
+    box-shadow:
+
+        0 4px 15px rgba(0,0,0,.05);
+
+}
+
+.search-input::placeholder {
+
+    color: #9ca3af;
+
+    font-weight: 400;
+
+}
+
+.search-input:focus {
+
+    background: white;
+
+    border-color: rgb(248,72,0);
+
+    box-shadow:
+
+        0 0 0 5px rgba(248,72,0,.08),
+
+        0 10px 30px rgba(0,0,0,.08);
+
+}
+
+/* ==========================================
+   RESULTS DROPDOWN
+========================================== */
+
+.search-results {
+
+    position: absolute;
+
+    top: calc(100% + 14px);
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    min-width: 700px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    overflow: hidden;
+
+    border: 1px solid #f1f5f9;
+
+    box-shadow:
+
+        0 20px 60px rgba(0,0,0,.12);
+
+    z-index: 5000;
+
+    animation: dropdownAppear .25s ease;
+
+}
+
+/* ==========================================
+   RESULT ITEM
+========================================== */
+
+.search-result {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 1.25rem 1.5rem;
+
+    text-decoration: none;
+
+    color: #111827;
+
+    transition: all .2s ease;
+
+    border-bottom: 1px solid #f3f4f6;
+
+}
+
+.search-result:last-child {
+
+    border-bottom: none;
+
+}
+
+.search-result:hover {
+
+    background: #f8fafc;
+
+    color: rgb(248,72,0);
+
+    padding-left: 2rem;
+
+}
+
+/* ==========================================
+   PRODUCT INFO
+========================================== */
+
+.product-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: .35rem;
+
+}
+
+.product-name {
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: inherit;
+
+}
+
+.product-category {
+
+    font-size: .9rem;
+
+    color: #6b7280;
+
+}
+
+/* ==========================================
+   PRODUCT PRICE
+========================================== */
+
+.product-price {
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    color: rgb(248,72,0);
+
+    white-space: nowrap;
+
+}
+
+/* ==========================================
+   EMPTY STATE
+========================================== */
+
+.no-results {
+
+    padding: 1.25rem;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: .95rem;
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes dropdownAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(-12px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1200px) {
+
+    .search-input {
+
+        min-width: 550px;
+
+    }
+
+    .search-results {
+
+        min-width: 550px;
+
+    }
+
+}
+
+@media (max-width: 992px) {
+
+    .search-input {
+
+        min-width: unset;
+
+        width: 100%;
+
+    }
+
+    .search-results {
+
+        min-width: unset;
+
+        width: 100%;
+
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .search-input {
+
+        height: 56px;
+
+        font-size: .95rem;
+
+    }
+
+    .search-results {
+
+        border-radius: 18px;
+
+    }
+
+    .search-result {
+
+        padding: 1rem;
+
+    }
+
+}
