@@ -99,7 +99,7 @@
     <img
 
         [src]="
-            product.images?.find(image => image.thumbnail)?.imageUrl
+            product.images.find(image => image.thumbnail)?.imageUrl
             ||
             '/images/products/placeholder.webp'
         "
