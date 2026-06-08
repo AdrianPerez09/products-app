@@ -1,11 +1,18 @@
+@if (products().length > 0) {
 
 <div class="products-page">
 
+    <!-- HEADER -->
+
     <div class="products-toolbar">
 
-        <div>
+        <div class="toolbar-title">
 
-            <h1>Products</h1>
+            <h1>
+
+                Products
+
+            </h1>
 
             <p>
 
@@ -17,52 +24,131 @@
 
         </div>
 
+        <!-- FUTURE FILTERS -->
+
+        <div class="toolbar-filters">
+
+            <input
+                type="text"
+                placeholder="Search products">
+
+            <select>
+
+                <option>
+
+                    All Brands
+
+                </option>
+
+            </select>
+
+            <select>
+
+                <option>
+
+                    All Categories
+
+                </option>
+
+            </select>
+
+            <select>
+
+                <option>
+
+                    Featured
+
+                </option>
+
+                <option>
+
+                    Price: Low to High
+
+                </option>
+
+                <option>
+
+                    Price: High to Low
+
+                </option>
+
+            </select>
+
+        </div>
+
     </div>
+
+    <!-- GRID -->
 
     <div class="products-grid">
 
-        @for(product of products(); track product.id) {
+        @for (
+            product of products();
+            track product.id
+        ) {
 
-            <div class="product-card">
+        <div
+            class="product-card"
+            [routerLink]="[
+                '/products',
+                product.id
+            ]">
 
-                <div class="product-image">
+            <div class="product-image">
 
-                    📦
+                📦
 
-                </div>
+            </div>
 
-                <div class="product-info">
+            <div class="product-info">
 
-                    <span class="brand">
+                <span class="brand">
 
-                        {{ product.brand.name }}
+                    {{ product.brand.name }}
 
-                    </span>
+                </span>
 
-                    <h3>
+                <h3>
 
-                        {{ product.name }}
+                    {{ product.name }}
 
-                    </h3>
+                </h3>
 
-                    <p>
+                <p>
 
-                        {{ product.description }}
+                    {{ product.description }}
 
-                    </p>
+                </p>
 
-                    <div class="price">
+                <div class="price">
 
-                        {{ product.price | currency:'EUR' }}
-
-                    </div>
+                    {{ product.price | currency:'EUR' }}
 
                 </div>
 
             </div>
+
+        </div>
 
         }
 
     </div>
 
 </div>
+
+} @else {
+
+<div class="products-loading">
+
+    @for (
+        item of [1,2,3,4,5,6,7,8];
+        track item
+    ) {
+
+        <div class="product-skeleton"></div>
+
+    }
+
+</div>
+
+}

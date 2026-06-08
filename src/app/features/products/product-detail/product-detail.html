@@ -1,0 +1,120 @@
+@if (product()) {
+
+<div class="product-detail-container">
+
+    <!-- PRODUCT HERO -->
+
+    <section class="product-hero">
+
+        <!-- IMAGE -->
+
+        <div class="product-image">
+
+          <div class="product-gallery">
+
+                <div class="thumbnails">
+
+                    @for (
+                        image of product().images;
+                        track image.id
+                    ) {
+
+                        <img
+
+                            class="thumbnail"
+
+                            [src]="image.imageUrl"
+
+                            [alt]="product().name"
+
+                            (click)="
+                                selectedImage.set(
+                                    image.imageUrl
+                                )
+                            ">
+
+                    }
+
+                </div>
+
+            <div class="product-image">
+
+                <img
+
+                    [src]="selectedImage()"
+
+                    [alt]="product().name">
+
+            </div>
+
+</div>
+
+        </div>
+
+        <!-- INFO -->
+
+        <div class="product-info">
+
+            <span class="product-category">
+
+                {{ product().category.name }}
+
+            </span>
+
+            <h1>
+
+                {{ product().name }}
+
+            </h1>
+
+            <p class="product-brand">
+
+                {{ product().brand.name }}
+
+            </p>
+
+            <div class="product-price">
+
+                {{ product().price | currency:'EUR' }}
+
+            </div>
+
+            <button class="buy-button">
+
+                Add to Cart
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- DESCRIPTION -->
+
+    <section class="product-description">
+
+        <h2>
+
+            Description
+
+        </h2>
+
+        <p>
+
+            {{ product().description }}
+
+        </p>
+
+    </section>
+
+</div>
+
+} @else {
+
+<div class="product-loading">
+
+    <div class="loading-card"></div>
+
+</div>
+
+}

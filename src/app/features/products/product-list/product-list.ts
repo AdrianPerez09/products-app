@@ -9,7 +9,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 // /products/category/3
 //                ↑
 //                id = 3
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 // Operador RxJS que permite cambiar de Observable
 // cuando cambia el parámetro de la ruta.
@@ -23,7 +23,7 @@ import { ProductService } from '../../../services/product/product.service';
 
   standalone: true,
 
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
 
   templateUrl: './product-list.html',
 

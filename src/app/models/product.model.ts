@@ -1,9 +1,10 @@
 import { Category } from './category.model';
 import { Brand } from './brand.model';
+import { ProductImage } from './product-image.model';
 
 export interface Product {
 
-  id?: number;
+  id: number;
 
   name: string;
 
@@ -11,7 +12,10 @@ export interface Product {
 
   price: number;
 
+  brand: Brand;
+
   category: Category;
 
-  brand: Brand;
+  images: ProductImage[];
+
 }

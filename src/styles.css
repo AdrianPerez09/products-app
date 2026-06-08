@@ -71,5 +71,24 @@ body::after {
     pointer-events: none;
 
     z-index: -1;
+}
+
+body::before,
+body::after {
+
+    width: 450px;
+
+}
+
+@media (max-width: 768px) {
+
+    body::before,
+    body::after {
+
+        width: 120px;
+
+        opacity: .3;
+
+    }
 
 }

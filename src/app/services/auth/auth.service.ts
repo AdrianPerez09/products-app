@@ -57,15 +57,21 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials);
   }
 
-  register(request: RegisterRequest) {
+register(request: RegisterRequest) {
 
   return this.http.post(
+
     `${this.apiUrl}/register`,
-    request
+
+    request,
+
+    {
+      responseType: 'text'
+    }
+
   );
 
 }
-
   saveTokens(accessToken: string, refreshToken: string): void {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);

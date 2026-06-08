@@ -1,19 +1,25 @@
-@if (authService.isAdmin()) {
+<div class="store-layout">
 
-    <app-home-navbar-admin></app-home-navbar-admin>
+    @if (authService.isAdmin()) {
 
-} @else if (authService.isUser()) {
+        <app-home-navbar-admin></app-home-navbar-admin>
 
-    <app-client-navbar></app-client-navbar>
+    } @else if (authService.isUser()) {
 
-} @else {
+        <app-client-navbar></app-client-navbar>
 
-    <app-guest-navbar></app-guest-navbar>
+    } @else {
 
-}
+        <app-guest-navbar></app-guest-navbar>
 
-<main class="store-content">
-    <router-outlet />
-</main>
+    }
 
-<app-shop-footer></app-shop-footer>
+    <main class="store-content">
+
+        <router-outlet />
+
+    </main>
+
+    <app-shop-footer></app-shop-footer>
+
+</div>
