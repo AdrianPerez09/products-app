@@ -36,16 +36,52 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
   }
 
-  searchProducts(query: string) {
+  searchProducts(
+
+  query?: string,
+
+  brandId?: number,
+
+  categoryId?: number,
+
+  sort?: string
+
+) {
+
+  const params: any = {};
+
+  if (query) {
+
+    params.query = query;
+
+  }
+
+  if (brandId) {
+
+    params.brandId = brandId;
+
+  }
+
+  if (categoryId) {
+
+    params.categoryId = categoryId;
+
+  }
+
+  if (sort) {
+
+    params.sort = sort;
+
+  }
 
   return this.http.get<Product[]>(
 
-    `${environment.apiUrl}/products/search`,
+    `${this.apiUrl}/search`,
 
     {
-      params: {
-        q: query
-      }
+
+      params
+
     }
 
   );

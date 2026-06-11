@@ -42,11 +42,21 @@
 
             @for (category of categories(); track category.id) {
 
-            <a [routerLink]="['/products/category',category.id]" (click)="sidebarOpen.set(false)">
+                    <a
 
-                {{ category.name }}
+                        [routerLink]="['/products']"
 
-            </a>
+                        [queryParams]="{
+
+                            category: category.id
+
+                        }"
+
+                        (click)="sidebarOpen.set(false)">
+
+                        {{ category.name }}
+
+                    </a>
 
             }
 

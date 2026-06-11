@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
+import { environment } from '../../../environments/environment';
+
 import { Brand } from '../../models/brand.model';
 
 @Injectable({
@@ -12,14 +14,26 @@ import { Brand } from '../../models/brand.model';
 export class BrandService {
 
   private apiUrl =
-    'http://localhost:8080/brands';
+    `${environment.apiUrl}/brands`;
 
-  constructor( private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getAllBrands():Observable<Brand[]> {
+  getAllBrands(): Observable<Brand[]> {
 
     return this.http.get<Brand[]>(
       this.apiUrl
+    );
+
+  }
+
+  getBrandsByCategory(
+    categoryId: number
+  ) {
+
+    return this.http.get<Brand[]>(
+
+      `${this.apiUrl}/category/${categoryId}`
+
     );
 
   }

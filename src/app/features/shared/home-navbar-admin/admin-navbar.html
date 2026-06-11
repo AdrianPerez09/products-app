@@ -38,7 +38,15 @@
                 @for (category of categories(); track category.id) {
 
                     <a
-                        [routerLink]="['/products/category', category.id]"
+
+                        [routerLink]="['/products']"
+
+                        [queryParams]="{
+
+                            category: category.id
+
+                        }"
+
                         (click)="sidebarOpen.set(false)">
 
                         {{ category.name }}

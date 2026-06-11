@@ -1,8 +1,10 @@
-@if (products().length > 0) {
+@if (filteredProducts().length > 0) {
 
 <div class="products-page">
 
-    <!-- HEADER -->
+    <!-- ==========================================
+         HEADER
+    ========================================== -->
 
     <div class="products-toolbar">
 
@@ -16,7 +18,7 @@
 
             <p>
 
-                {{ products().length }}
+                {{ filteredProducts().length }}
 
                 products found
 
@@ -24,49 +26,94 @@
 
         </div>
 
-        <!-- FUTURE FILTERS -->
+        <!-- ==========================================
+             FILTERS
+        ========================================== -->
 
         <div class="toolbar-filters">
 
-            <input
-                type="text"
-                placeholder="Search products">
 
-            <select>
+            <!-- BRAND -->
 
-                <option>
+            <select
+
+                [ngModel]="selectedBrand()"
+
+                (ngModelChange)="onBrandSelect($event)">
+
+                <option [ngValue]="null">
 
                     All Brands
 
                 </option>
 
+                @for (
+                    brand of brands();
+                    track brand.id
+                ) {
+
+                    <option
+                        [ngValue]="brand.id">
+
+                        {{ brand.name }}
+
+                    </option>
+
+                }
+
             </select>
 
-            <select>
+            <!-- CATEGORY -->
 
-                <option>
+            <select
+
+                [ngModel]="selectedCategory()"
+
+                (ngModelChange)="onCategorySelect($event)">
+
+                <option  [ngValue]="null">
 
                     All Categories
 
                 </option>
 
+                @for (
+                    category of categories();
+                    track category.id
+                ) {
+
+                    <option
+                        [ngValue]="category.id">
+
+                        {{ category.name }}
+
+                    </option>
+
+                }
+
             </select>
 
-            <select>
+            <!-- SORT -->
 
-                <option>
+            <select
+
+                [ngModel]="sortBy()"
+
+                (ngModelChange)="onSortSelect($event)">
+
+                <option value="">
 
                     Featured
 
                 </option>
 
-                <option>
+                <option value="price-asc">
 
                     Price: Low to High
 
                 </option>
 
-                <option>
+                <option value="price-desc">
 
                     Price: High to Low
 
@@ -78,35 +125,57 @@
 
     </div>
 
-    <!-- GRID -->
+    <!-- ==========================================
+         PRODUCTS GRID
+    ========================================== -->
 
     <div class="products-grid">
 
         @for (
-            product of products();
+
+            product of filteredProducts();
+
             track product.id
+
         ) {
 
         <div
+
             class="product-card"
+
             [routerLink]="[
+
                 '/products',
+
                 product.id
+
             ]">
 
-<div class="product-image">
+            <!-- IMAGE -->
 
-    <img
+            <div class="product-image">
 
-        [src]="
-            product.images.find(image => image.thumbnail)?.imageUrl
-            ||
-            '/images/products/placeholder.webp'
-        "
+                <img
 
-        [alt]="product.name">
+                    [src]="
 
-</div>
+                        product.images.find(
+
+                            image => image.thumbnail
+
+                        )?.imageUrl
+
+                        ||
+
+                        '/images/products/placeholder.webp'
+
+                    "
+
+                    [alt]="product.name">
+
+            </div>
+
+            <!-- INFO -->
 
             <div class="product-info">
 
@@ -146,11 +215,18 @@
 
 } @else {
 
+<!-- ==========================================
+     LOADING STATE
+========================================== -->
+
 <div class="products-loading">
 
     @for (
+
         item of [1,2,3,4,5,6,7,8];
+
         track item
+
     ) {
 
         <div class="product-skeleton"></div>

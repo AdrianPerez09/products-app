@@ -1,21 +1,30 @@
-import { Component, inject } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  effect
+} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 
-// Permite acceder a los parámetros de la URL.
-// Ejemplo:
-// /products/category/3
-//                ↑
-//                id = 3
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink
+} from '@angular/router';
 
-// Operador RxJS que permite cambiar de Observable
-// cuando cambia el parámetro de la ruta.
-import { switchMap } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 
 import { ProductService } from '../../../services/product/product.service';
+
+import { Product } from '../../../models/product.model';
+import { BrandService } from '../../../services/brand/brand.service';
+import { CategoryService } from '../../../services/category/category.service';
+import { Category } from '../../../models/category.model';
+import { Brand } from '../../../models/brand.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
 
@@ -23,87 +32,360 @@ import { ProductService } from '../../../services/product/product.service';
 
   standalone: true,
 
-  imports: [CommonModule, RouterLink],
+  imports: [
+    CommonModule,
+    RouterLink,
+    FormsModule
+  ],
 
   templateUrl: './product-list.html',
 
-  styleUrl: './product-list.css',
+  styleUrl: './product-list.css'
 
 })
 export class ProductListComponent {
 
-  // Inyectamos el servicio de productos.
-  // Nos permite llamar a:
-  // getAllProducts()
-  // getProductsByCategory(...)
-  private productService = inject(ProductService);
+  /* ==========================================
+     DEPENDENCIES
+  ========================================== */
 
-  // Inyectamos la ruta actual.
-  // Desde aquí podremos leer el parámetro "id".
-  private route = inject(ActivatedRoute);
+  private productService =
+    inject(ProductService);
 
-  // Creamos una Signal que contendrá la lista
-  // de productos a mostrar.
-  products = toSignal(
+  private route =
+    inject(ActivatedRoute);
 
-    // Escuchamos cambios en la URL.
-    // Si el usuario navega de:
-    //
-    // /products/category/1
-    //
-    // a
-    //
-    // /products/category/2
-    //
-    // este observable se vuelve a ejecutar.
-    this.route.paramMap.pipe(
+  private brandService =
+    inject(BrandService);
 
-      switchMap(params => {
+  private categoryService =
+    inject(CategoryService);
 
-        // Obtenemos el parámetro "id"
-        // de la URL.
-        //
-        // /products/category/3
-        //
-        // devuelve:
-        //
-        // "3"
-        const categoryId =
-          Number(params.get('id'));
+  private router =
+    inject(Router);
 
-        // Si existe un id válido...
-        if (categoryId) {
 
-          // Llamamos al backend para obtener
-          // únicamente los productos
-          // de esa categoría.
-          return this.productService
-            .getProductsByCategory(
-              categoryId
-            );
+  /* ==========================================
+   BRANDS
+========================================== */
 
-        }
+  private loadBrands(): void {
 
-        // Si NO existe id
-        //
-        // Ejemplo:
-        //
-        // /products
-        //
-        // mostramos todos los productos.
-        return this.productService
-          .getAllProducts();
+    this.brandService
 
-      })
+      .getAllBrands()
+
+      .subscribe(brands => {
+
+        this.brands.set(
+          brands
+        );
+
+      });
+
+  }
+
+  /* ==========================================
+     CATEGORIES
+  ========================================== */
+
+  private loadCategories(): void {
+
+    this.categoryService
+
+      .getAllCategories()
+
+      .subscribe(categories => {
+
+        this.categories.set(
+          categories
+        );
+
+      });
+
+  }
+
+  /**
+   * Productos mostrados.
+   */
+  filteredProducts =
+    signal<Product[]>([]);
+
+  brands =
+    signal<Brand[]>([]);
+
+  categories =
+    signal<Category[]>([]);
+
+
+  /* ==========================================
+     FILTERS
+  ========================================== */
+
+  searchQuery = '';
+
+  selectedBrand =
+    signal<number | null>(
+      null
+    );
+
+  selectedCategory =
+    signal<number | null>(
+      null
+    );
+
+  readonly categoryFromQuery = toSignal(
+
+    this.route.queryParamMap.pipe(
+
+      map(params =>
+
+        Number(
+          params.get('category')
+        ) || null
+
+      )
 
     ),
 
-    // Valor inicial mientras se realiza
-    // la petición HTTP.
     {
-      initialValue: []
+      initialValue: null
     }
 
   );
+
+  readonly brandFromQuery = toSignal(
+
+    this.route.queryParamMap.pipe(
+
+      map(params =>
+
+        Number(
+          params.get('brand')
+        ) || null
+
+      )
+
+    ),
+
+    {
+      initialValue: null
+    }
+
+  );
+
+  readonly sortFromQuery = toSignal(
+
+    this.route.queryParamMap.pipe(
+
+      map(params =>
+
+        params.get('sort')
+
+        || ''
+
+      )
+
+    ),
+
+    {
+      initialValue: ''
+    }
+
+  );
+
+  sortBy =
+    signal('');
+
+  /* ==========================================
+     CONSTRUCTOR
+  ========================================== */
+
+  constructor() {
+
+    this.initializeEffects();
+
+    this.loadCategories();
+  }
+  /* ==========================================
+     EFFECTS
+  ========================================== */
+  private initializeEffects(): void {
+
+    effect(() => {
+
+      const categoryId =
+
+        this.categoryFromQuery();
+
+      const brandId =
+
+        this.brandFromQuery();
+
+      const sort =
+
+        this.sortFromQuery();
+
+      this.selectedCategory.set(
+        categoryId
+      );
+
+      this.selectedBrand.set(
+        brandId
+      );
+
+      this.sortBy.set(
+        sort
+      );
+
+      if (categoryId) {
+
+        this.loadBrandsByCategory(
+          categoryId
+        );
+
+      }
+
+      else {
+
+        this.loadBrands();
+
+      }
+
+      this.loadFilteredProducts();
+
+    });
+
+  }
+  /* ==========================================
+     EVENTS
+  ========================================== */
+
+  onCategorySelect(
+    categoryId: number | null
+  ): void {
+
+    this.router.navigate(
+
+      ['/products'],
+
+      {
+
+        queryParams: {
+
+          category: categoryId,
+
+          brand: null,
+
+          sort: this.sortBy() || null
+
+        }
+
+      }
+
+    );
+
+  }
+  onBrandSelect(
+    brandId: number | null
+  ): void {
+
+    this.router.navigate(
+
+      ['/products'],
+
+      {
+
+        queryParams: {
+
+          category: this.selectedCategory(),
+
+          brand: brandId,
+
+          sort: this.sortBy() || null
+
+        }
+
+      }
+
+    );
+
+  }
+
+  onSortSelect(
+    sort: string
+  ): void {
+
+    this.router.navigate(
+
+      ['/products'],
+
+      {
+
+        queryParams: {
+
+          category: this.selectedCategory(),
+
+          brand: this.selectedBrand(),
+
+          sort: sort || null
+
+        }
+
+      }
+
+    );
+
+  }
+
+  /* ==========================================
+     API FILTERS
+  ========================================== */
+
+  private loadFilteredProducts(): void {
+
+    this.productService
+
+      .searchProducts(
+
+        undefined,
+
+        this.selectedBrand() ?? undefined,
+
+        this.selectedCategory() ?? undefined,
+
+        this.sortBy() || undefined
+
+      )
+
+      .subscribe(products => {
+
+        this.filteredProducts.set(
+          products
+        );
+
+      });
+
+  }
+
+  private loadBrandsByCategory(
+    categoryId: number
+  ): void {
+
+    this.brandService
+
+      .getBrandsByCategory(
+        categoryId
+      )
+
+      .subscribe(brands => {
+
+        this.brands.set(
+          brands
+        );
+
+      });
+
+  }
 
 }
