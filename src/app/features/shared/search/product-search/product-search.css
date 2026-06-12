@@ -118,12 +118,9 @@
 
     border-radius: 24px;
 
-    overflow: hidden;
-
     border: 1px solid #f1f5f9;
 
     box-shadow:
-
         0 20px 60px rgba(0,0,0,.12);
 
     z-index: 5000;
@@ -138,17 +135,23 @@
 
 .search-result {
 
+    position: relative;
+
     display: flex;
 
     justify-content: space-between;
 
     align-items: center;
 
-    padding: 1.25rem 1.5rem;
+    gap: 1rem;
+
+    padding: 1.1rem 1.5rem;
 
     text-decoration: none;
 
     color: #111827;
+
+    cursor: pointer;
 
     transition: all .2s ease;
 
@@ -162,13 +165,67 @@
 
 }
 
+.search-result::before {
+
+    content: '';
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+
+    width: 4px;
+
+    height: 100%;
+
+    background: transparent;
+
+    transition: all .2s ease;
+
+}
+
 .search-result:hover {
 
-    background: #f8fafc;
+    background:
 
-    color: rgb(248,72,0);
+        linear-gradient(
 
-    padding-left: 2rem;
+            90deg,
+
+            rgba(248,72,0,.08),
+
+            transparent
+
+        );
+
+    transform: translateX(4px);
+
+}
+
+.search-result:hover::before {
+
+    background: rgb(248,72,0);
+
+}
+
+.search-result.active {
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            rgba(248,72,0,.12),
+
+            transparent
+
+        );
+
+    border-left:
+
+        4px solid rgb(248,72,0);
 
 }
 
@@ -194,6 +251,14 @@
 
     color: inherit;
 
+    transition: color .2s ease;
+
+}
+
+.search-result:hover .product-name {
+
+    color: rgb(248,72,0);
+
 }
 
 .product-category {
@@ -217,6 +282,14 @@
     color: rgb(248,72,0);
 
     white-space: nowrap;
+
+    transition: transform .2s ease;
+
+}
+
+.search-result:hover .product-price {
+
+    transform: scale(1.05);
 
 }
 

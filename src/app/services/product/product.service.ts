@@ -36,6 +36,28 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
   }
 
+  getSuggestions(
+  query: string
+) {
+
+  return this.http.get<Product[]>(
+
+    `${this.apiUrl}/suggestions`,
+
+    {
+
+      params: {
+
+        q: query
+
+      }
+
+    }
+
+  );
+
+}
+
   searchProducts(
 
   query?: string,

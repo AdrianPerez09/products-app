@@ -10,7 +10,11 @@
         class="search-input"
         type="text"
         placeholder="Search processors, GPUs, laptops..."
-        [formControl]="searchControl">
+        [formControl]="searchControl"
+        (keydown.enter)="selectCurrentSuggestion()",
+        (keydown.arrowdown)="moveDown()"
+        (keydown.arrowup)="moveUp()"
+        >
 
     @if (suggestions().length > 0 && isOpen()) {
 
@@ -19,9 +23,14 @@
             @for (product of suggestions(); track product.id) {
 
                 <a
-                    class="search-result">
+                    class="search-result"
+                    [class.active]="selectedIndex() === $index "
+                    (click)="selectProduct(product.id)"
+                    >
 
-                    <div class="product-info">
+                    <div 
+                    class="product-info"              
+                    >
 
                         <span class="product-name">
 

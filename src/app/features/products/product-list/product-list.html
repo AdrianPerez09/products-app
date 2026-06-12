@@ -1,4 +1,26 @@
-@if (filteredProducts().length > 0) {
+
+@if  (isLoading()) {
+<!-- ==========================================
+     LOADING STATE
+========================================== -->
+
+<div class="products-loading">
+
+    @for (
+
+        item of [1,2,3,4,5,6,7,8];
+
+        track item
+
+    ) {
+
+        <div class="product-skeleton"></div>
+
+    }
+
+</div>
+}
+@else if (filteredProducts().length > 0) {
 
 <div class="products-page">
 
@@ -212,27 +234,32 @@
     </div>
 
 </div>
+}
+@else 
+{
 
-} @else {
+    <div class="empty-state">
 
-<!-- ==========================================
-     LOADING STATE
-========================================== -->
+        <div class="empty-icon">
 
-<div class="products-loading">
+            🔎
 
-    @for (
+        </div>
 
-        item of [1,2,3,4,5,6,7,8];
+        <h2>
 
-        track item
+            No products found
 
-    ) {
+        </h2>
 
-        <div class="product-skeleton"></div>
+        <p>
 
-    }
+            No products match
 
-</div>
+            "{{ searchQuery() }}"
+
+        </p>
+
+    </div>
 
 }

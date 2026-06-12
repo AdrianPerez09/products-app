@@ -117,12 +117,16 @@ export class ProductListComponent {
   categories =
     signal<Category[]>([]);
 
+    isLoading =
+  signal(true);
+
 
   /* ==========================================
      FILTERS
   ========================================== */
 
-  searchQuery = '';
+ searchQuery =
+  signal('');
 
   selectedBrand =
     signal<number | null>(
@@ -194,6 +198,26 @@ export class ProductListComponent {
 
   );
 
+  readonly searchFromQuery = toSignal(
+
+  this.route.queryParamMap.pipe(
+
+    map(params =>
+
+      params.get('search')
+
+      || ''
+
+    )
+
+  ),
+
+  {
+    initialValue: ''
+  }
+
+);
+
   sortBy =
     signal('');
 
@@ -226,6 +250,12 @@ export class ProductListComponent {
 
         this.sortFromQuery();
 
+      const search =
+
+      this.searchFromQuery();
+
+     
+
       this.selectedCategory.set(
         categoryId
       );
@@ -236,6 +266,10 @@ export class ProductListComponent {
 
       this.sortBy.set(
         sort
+      );
+
+      this.searchQuery.set(
+      search
       );
 
       if (categoryId) {
@@ -272,6 +306,8 @@ export class ProductListComponent {
       {
 
         queryParams: {
+          
+          search: this.searchQuery() || null,
 
           category: categoryId,
 
@@ -297,6 +333,8 @@ export class ProductListComponent {
       {
 
         queryParams: {
+
+          search: this.searchQuery() || null,
 
           category: this.selectedCategory(),
 
@@ -324,6 +362,8 @@ export class ProductListComponent {
 
         queryParams: {
 
+          search: this.searchQuery() || null,
+
           category: this.selectedCategory(),
 
           brand: this.selectedBrand(),
@@ -344,11 +384,13 @@ export class ProductListComponent {
 
   private loadFilteredProducts(): void {
 
+ this.isLoading.set(true);
+
     this.productService
 
       .searchProducts(
 
-        undefined,
+        this.searchQuery() || undefined,
 
         this.selectedBrand() ?? undefined,
 
@@ -359,6 +401,8 @@ export class ProductListComponent {
       )
 
       .subscribe(products => {
+
+         this.isLoading.set(false);
 
         this.filteredProducts.set(
           products

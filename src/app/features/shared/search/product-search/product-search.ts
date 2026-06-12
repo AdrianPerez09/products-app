@@ -19,14 +19,18 @@ import {
   distinctUntilChanged
 } from 'rxjs';
 
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../services/product/product.service';
+import { KbSuggestionsNavigation } from './kb-suggestions-navigation';
 
 @Component({
   selector: 'app-product-search',
   standalone: true,
   imports: [
     ReactiveFormsModule
+  ],
+  providers: [
+    KbSuggestionsNavigation
   ],
   templateUrl: './product-search.html',
   styleUrl: './product-search.css'
@@ -39,11 +43,28 @@ export class ProductSearchComponent {
   private elementRef =
     inject(ElementRef);
 
+  private router =
+    inject(Router);
+
+  private route =
+    inject(ActivatedRoute);
+
+  private keyboardNavigation =
+    inject(KbSuggestionsNavigation);
+
+  private ignoreNextSearch =
+    false;
+
   searchControl =
     new FormControl('');
 
   suggestions = signal<any[]>([]);
   isOpen = signal(false);
+
+  selectedIndex =
+
+    this.keyboardNavigation
+      .selectedIndex;
 
   constructor() {
 
@@ -57,6 +78,18 @@ export class ProductSearchComponent {
       )
       .subscribe(query => {
 
+        if (
+
+          this.ignoreNextSearch
+
+        ) {
+
+          this.ignoreNextSearch = false;
+
+          return;
+
+        }
+
         if (!query || query.length < 2) {
 
           this.suggestions.set([]);
@@ -66,10 +99,16 @@ export class ProductSearchComponent {
         }
 
         this.productService
-          .searchProducts(query)
+          .getSuggestions(query)
           .subscribe(products => {
 
+            console.log(
+              'SEARCH QUERY:',
+              query
+            );
+
             this.suggestions.set(products);
+            this.keyboardNavigation.reset();
             this.isOpen.set(products.length > 0);
 
           });
@@ -97,19 +136,137 @@ export class ProductSearchComponent {
 
   }
 
+
   @HostListener(
-  'document:keydown.escape'
-)
-closeSearch() {
+    'document:keydown.escape'
+  )
+  closeSearch() {
 
-  this.isOpen.set(false);
+    this.isOpen.set(false);
 
-}
+  }
 
-  selectProduct() {
+  selectProduct(productId: number): void {
 
-  this.isOpen.set(false);
+    const currentParams =
 
-}
+      this.route.snapshot.queryParams;
+
+        this.searchControl.reset();
+        console.log('CERRANDO');
+        this.isOpen.set(false);
+
+    this.router.navigate(
+
+      [
+
+        '/products',
+
+        productId
+
+      ],
+
+      {
+
+        queryParams:
+
+          currentParams
+
+      }
+
+    );
+
+  }
+
+  selectCurrentSuggestion(): void {
+
+    const product =
+
+      this.suggestions()[
+
+      this.selectedIndex()
+
+      ];
+
+    if (product) {
+
+      this.selectProduct(
+        product.id
+      );
+
+      return;
+
+    }
+
+    this.searchProducts();
+
+  }
+
+  moveDown(): void {
+
+    this.keyboardNavigation
+
+      .moveDown(
+
+        this.suggestions().length
+
+      );
+
+  }
+
+  moveUp(): void {
+
+    this.keyboardNavigation
+
+      .moveUp();
+
+  }
+
+
+  searchProducts(): void {
+
+    const query =
+
+      this.searchControl.value?.trim();
+
+    if (!query) {
+
+      return;
+
+    }
+
+    this.ignoreNextSearch = true;
+
+    this.isOpen.set(false);
+
+    this.suggestions.set([]);
+
+    this.keyboardNavigation.reset();
+
+
+
+    const currentParams =
+
+      this.route.snapshot.queryParams;
+
+    this.router.navigate(
+
+      ['/products'],
+
+      {
+
+        queryParams: {
+
+          ...currentParams,
+
+          search: query
+
+        }
+
+      }
+
+    );
+
+  }
 
 }
